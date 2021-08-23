@@ -14,11 +14,48 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.logging.logback.ColorConverter;
 import org.springframework.core.env.Environment;
+import org.springframework.nativex.hint.*;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
+@InitializationHint(types = ColorConverter.class, initTime = InitializationTime.BUILD)
 @SpringBootApplication
+@NativeHint(
+    options = { "--enable-url-protocols=http", "--enable-url-protocols=https" },
+    resources = {
+        @ResourceHint(patterns = "com/jhipster/demo/blog/config/WebConfigurer.class"),
+        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/User.class"),
+        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Authority.class"),
+        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Blog.class"),
+        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Post.class"),
+        @ResourceHint(patterns = "com/jhipster/demo//blog/domain/Tag.class"),
+    },
+    types = @TypeHint(
+        access = AccessBits.ALL,
+        typeNames = {
+            "springfox.documentation.spi.schema.ModelBuilderPlugin",
+            "springfox.documentation.spi.schema.ModelPropertyBuilderPlugin",
+            "springfox.documentation.spi.schema.SyntheticModelProviderPlugin",
+            "springfox.documentation.spi.schema.TypeNameProviderPlugin",
+            "springfox.documentation.spi.schema.ViewProviderPlugin",
+            "springfox.documentation.spi.service.DocumentationPlugin",
+            "springfox.documentation.spi.service.ApiListingBuilderPlugin",
+            "springfox.documentation.spi.service.ApiListingScannerPlugin",
+            "springfox.documentation.spi.service.DefaultsProviderPlugin",
+            "springfox.documentation.spi.service.ExpandedParameterBuilderPlugin",
+            "springfox.documentation.spi.service.ModelNamesRegistryFactoryPlugin",
+            "springfox.documentation.spi.service.OperationBuilderPlugin",
+            "springfox.documentation.spi.service.OperationModelsProviderPlugin",
+            "springfox.documentation.spi.service.ParameterBuilderPlugin",
+            "springfox.documentation.spi.service.ResponseBuilderPlugin",
+            "springfox.documentation.service.PathDecorator",
+            "springfox.documentation.spi.DocumentationType",
+            "org.jhipster.blog.config.WebConfigurer",
+        }
+    )
+)
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 public class BlogApp {
 
