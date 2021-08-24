@@ -52,7 +52,7 @@ import tech.jhipster.config.JHipsterConstants;
             "springfox.documentation.spi.service.ResponseBuilderPlugin",
             "springfox.documentation.service.PathDecorator",
             "springfox.documentation.spi.DocumentationType",
-            "org.jhipster.blog.config.WebConfigurer",
+            "com.jhipster.demo.blog.config.WebConfigurer",
         }
     )
 )
