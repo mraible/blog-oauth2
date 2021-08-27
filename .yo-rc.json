@@ -11,7 +11,7 @@
     "buildTool": "maven",
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
-    "enableHibernateCache": true,
+    "enableHibernateCache": false,
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
     "jhiPrefix": "jhi",
