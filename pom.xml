@@ -55,7 +55,6 @@
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
         <!-- These remain empty unless the corresponding profile is active -->
-        <profile.no-liquibase />
         <profile.api-docs />
         <profile.tls />
 
@@ -64,19 +63,6 @@
         <!-- The spring-boot version should match the one managed by
         https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
         <spring-boot.version>2.5.4</spring-boot.version>
-        <!-- The hibernate version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <hibernate.version>5.4.32.Final</hibernate.version>
-        <!-- The javassist version should match the one managed by
-        https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
-        <javassist.version>3.27.0-GA</javassist.version>
-        <!-- The liquibase version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <liquibase.version>4.4.2</liquibase.version>
-        <liquibase-hibernate5.version>4.4.2</liquibase-hibernate5.version>
-        <h2.version>1.4.200</h2.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
-        <jaxb-runtime.version>2.3.3</jaxb-runtime.version>
         <archunit-junit5.version>0.20.1</archunit-junit5.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <!-- Plugin versions -->
@@ -130,29 +116,12 @@
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hibernate5</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hppc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -167,48 +136,8 @@
             <artifactId>springfox-bean-validators</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <!-- Inherited version from Spring Boot can't be used because of regressions -->
-            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -233,10 +162,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -308,6 +233,10 @@
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <!-- Spring Cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -327,26 +256,6 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
-            <plugin>
-                <groupId>org.hibernate.orm.tooling</groupId>
-                <artifactId>hibernate-enhance-maven-plugin</artifactId>
-                <version>${hibernate.version}</version>
-                <executions>
-                    <execution>
-                        <id>enhance</id>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                        <configuration>
-                            <failOnError>true</failOnError>
-                            <enableLazyInitialization>true</enableLazyInitialization>
-                            <enableDirtyTracking>true</enableDirtyTracking>
-                            <enableAssociationManagement>true</enableAssociationManagement>
-                            <enableExtendedEnhancement>false</enableExtendedEnhancement>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.experimental</groupId>
                 <artifactId>spring-aot-maven-plugin</artifactId>
@@ -411,10 +320,6 @@
                 <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -477,17 +382,6 @@
                                 <groupId>org.mapstruct</groupId>
                                 <artifactId>mapstruct-processor</artifactId>
                                 <version>${mapstruct.version}</version>
-                            </path>
-                            <!-- For JPA static metamodel generation -->
-                            <path>
-                                <groupId>org.hibernate</groupId>
-                                <artifactId>hibernate-jpamodelgen</artifactId>
-                                <version>${hibernate.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.glassfish.jaxb</groupId>
-                                <artifactId>jaxb-runtime</artifactId>
-                                <version>${jaxb-runtime.version}</version>
                             </path>
                             <!-- jhipster-needle-maven-add-annotation-processor -->
                         </annotationProcessorPaths>
@@ -649,57 +543,6 @@
                             </permissions>
                         </extraDirectories>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>${liquibase.version}</version>
-                    <configuration>
-                        <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
-                        <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                        <driver>org.h2.Driver</driver>
-                        <url>jdbc:h2:file:${project.build.directory}/h2db/db/blog</url>
-                        <defaultSchemaName></defaultSchemaName>
-                        <username>blog</username>
-                        <password></password>
-                        <referenceUrl>hibernate:spring:com.jhipster.demo.blog.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
-                        <verbose>true</verbose>
-                        <logging>debug</logging>
-                        <contexts>!test</contexts>
-                        <diffExcludeObjects>oauth_access_token, oauth_approvals, oauth_client_details, oauth_client_token, oauth_code, oauth_refresh_token</diffExcludeObjects>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.liquibase</groupId>
-                            <artifactId>liquibase-core</artifactId>
-                            <version>${liquibase.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.liquibase.ext</groupId>
-                            <artifactId>liquibase-hibernate5</artifactId>
-                            <version>${liquibase-hibernate5.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-starter-data-jpa</artifactId>
-                            <version>${spring-boot.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>javax.validation</groupId>
-                            <artifactId>validation-api</artifactId>
-                            <version>${validation-api.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.javassist</groupId>
-                            <artifactId>javassist</artifactId>
-                            <version>${javassist.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>${h2.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
@@ -884,12 +727,6 @@
     </build>
     <profiles>
         <profile>
-            <id>no-liquibase</id>
-            <properties>
-                <profile.no-liquibase>,no-liquibase</profile.no-liquibase>
-            </properties>
-        </profile>
-        <profile>
             <id>api-docs</id>
             <properties>
                 <profile.api-docs>,api-docs</profile.api-docs>
@@ -907,10 +744,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
             </dependencies>
             <build>
                 <plugins>
@@ -1032,7 +865,7 @@
             </build>
             <properties>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active>
+                <spring.profiles.active>dev</spring.profiles.active>
             </properties>
         </profile>
         <profile>
@@ -1045,19 +878,15 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </dependency>
-               <!--<dependency>
+                <!--dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-devtools</artifactId>
                     <optional>true</optional>
-                </dependency>-->
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
+                </dependency-->
             </dependencies>
             <properties>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>dev${profile.tls}${profile.no-liquibase}</spring.profiles.active>
+                <spring.profiles.active>dev${profile.tls}</spring.profiles.active>
             </properties>
         </profile>
         <profile>
@@ -1146,7 +975,7 @@
             </build>
             <properties>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>prod${profile.api-docs}${profile.tls}${profile.no-liquibase}</spring.profiles.active>
+                <spring.profiles.active>prod${profile.api-docs}${profile.tls}</spring.profiles.active>
             </properties>
         </profile>
         <profile>
@@ -1162,6 +991,18 @@
         </profile>
         <profile>
             <!--
+                Profile for tracing requests with Zipkin.
+            -->
+            <id>zipkin</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-zipkin</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <!--
                 Profile for applying IDE-specific configuration.
                 At the moment it configures MapStruct and Hibernate JPA Metamodel Generator, which you need when working
                 with DTOs and entity filtering.
@@ -1172,10 +1013,6 @@
                     <groupId>org.mapstruct</groupId>
                     <artifactId>mapstruct-processor</artifactId>
                     <version>${mapstruct.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-jpamodelgen</artifactId>
                 </dependency>
             </dependencies>
         </profile>

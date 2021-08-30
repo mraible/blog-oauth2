@@ -28,15 +28,6 @@ class ExceptionTranslatorIT {
     private MockMvc mockMvc;
 
     @Test
-    void testConcurrencyFailure() throws Exception {
-        mockMvc
-            .perform(get("/api/exception-translator-test/concurrency-failure").with(csrf()))
-            .andExpect(status().isConflict())
-            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
-            .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_CONCURRENCY_FAILURE));
-    }
-
-    @Test
     void testMethodArgumentNotValid() throws Exception {
         mockMvc
             .perform(
