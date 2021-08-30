@@ -13,10 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.File;
 import java.util.*;
 import javax.servlet.*;
-import org.h2.server.web.WebServlet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.mock.web.MockServletContext;
@@ -55,7 +54,6 @@ class WebConfigurerTest {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
 
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
-        verify(servletContext, never()).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
     @Test
@@ -63,13 +61,12 @@ class WebConfigurerTest {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT);
 
         assertThatCode(() -> webConfigurer.onStartup(servletContext)).doesNotThrowAnyException();
-        verify(servletContext).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
     @Test
     void shouldCustomizeServletContainer() {
         env.setActiveProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION);
-        UndertowServletWebServerFactory container = new UndertowServletWebServerFactory();
+        TomcatServletWebServerFactory container = new TomcatServletWebServerFactory();
         webConfigurer.customize(container);
         assertThat(container.getMimeMappings().get("abs")).isEqualTo("audio/x-mpeg");
         assertThat(container.getMimeMappings().get("html")).isEqualTo("text/html");

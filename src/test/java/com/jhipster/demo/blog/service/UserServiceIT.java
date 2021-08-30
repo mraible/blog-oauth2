@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jhipster.demo.blog.IntegrationTest;
 import com.jhipster.demo.blog.config.Constants;
-import com.jhipster.demo.blog.domain.User;
-import com.jhipster.demo.blog.repository.UserRepository;
 import com.jhipster.demo.blog.security.AuthoritiesConstants;
 import com.jhipster.demo.blog.service.dto.AdminUserDTO;
 import java.util.Collection;
@@ -15,21 +13,17 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration tests for {@link UserService}.
  */
 @IntegrationTest
-@Transactional
 class UserServiceIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";
@@ -45,26 +39,12 @@ class UserServiceIT {
     private static final String DEFAULT_LANGKEY = "dummy";
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
-
-    private User user;
 
     private Map<String, Object> userDetails;
 
     @BeforeEach
     public void init() {
-        user = new User();
-        user.setLogin(DEFAULT_LOGIN);
-        user.setActivated(true);
-        user.setEmail(DEFAULT_EMAIL);
-        user.setFirstName(DEFAULT_FIRSTNAME);
-        user.setLastName(DEFAULT_LASTNAME);
-        user.setImageUrl(DEFAULT_IMAGEURL);
-        user.setLangKey(DEFAULT_LANGKEY);
-
         userDetails = new HashMap<>();
         userDetails.put("sub", DEFAULT_LOGIN);
         userDetails.put("email", DEFAULT_EMAIL);
@@ -74,7 +54,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testDefaultUserDetails() {
         OAuth2AuthenticationToken authentication = createMockOAuth2AuthenticationToken(userDetails);
         AdminUserDTO userDTO = userService.getUserFromAuthentication(authentication);
@@ -90,7 +69,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testUserDetailsWithUsername() {
         userDetails.put("preferred_username", "TEST");
 
@@ -101,7 +79,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testUserDetailsWithLangKey() {
         userDetails.put("langKey", DEFAULT_LANGKEY);
         userDetails.put("locale", "en-US");
@@ -113,7 +90,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testUserDetailsWithLocale() {
         userDetails.put("locale", "it-IT");
 
@@ -124,7 +100,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testUserDetailsWithUSLocaleUnderscore() {
         userDetails.put("locale", "en_US");
 
@@ -135,7 +110,6 @@ class UserServiceIT {
     }
 
     @Test
-    @Transactional
     void testUserDetailsWithUSLocaleDash() {
         userDetails.put("locale", "en-US");
 

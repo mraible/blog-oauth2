@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.test.context.TestSecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration tests for the {@link AccountResource} REST controller.
@@ -37,7 +36,6 @@ class AccountResourceIT {
     ClientRegistration clientRegistration;
 
     @Test
-    @Transactional
     void testGetExistingAccount() throws Exception {
         TestSecurityContextHolder
             .getContext()
@@ -71,12 +69,10 @@ class AccountResourceIT {
         restAccountMockMvc
             .perform(
                 get("/api/authenticate")
-                    .with(
-                        request -> {
-                            request.setRemoteUser(TEST_USER_LOGIN);
-                            return request;
-                        }
-                    )
+                    .with(request -> {
+                        request.setRemoteUser(TEST_USER_LOGIN);
+                        return request;
+                    })
                     .accept(MediaType.APPLICATION_JSON)
             )
             .andExpect(status().isOk())

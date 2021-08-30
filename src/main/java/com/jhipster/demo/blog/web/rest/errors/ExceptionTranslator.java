@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.dao.ConcurrencyFailureException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindingResult;
@@ -95,13 +93,12 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         List<FieldErrorVM> fieldErrors = result
             .getFieldErrors()
             .stream()
-            .map(
-                f ->
-                    new FieldErrorVM(
-                        f.getObjectName().replaceFirst("DTO$", ""),
-                        f.getField(),
-                        StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
-                    )
+            .map(f ->
+                new FieldErrorVM(
+                    f.getObjectName().replaceFirst("DTO$", ""),
+                    f.getField(),
+                    StringUtils.isNotBlank(f.getDefaultMessage()) ? f.getDefaultMessage() : f.getCode()
+                )
             )
             .collect(Collectors.toList());
 
@@ -125,12 +122,6 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         );
     }
 
-    @ExceptionHandler
-    public ResponseEntity<Problem> handleConcurrencyFailure(ConcurrencyFailureException ex, NativeWebRequest request) {
-        Problem problem = Problem.builder().withStatus(Status.CONFLICT).with(MESSAGE_KEY, ErrorConstants.ERR_CONCURRENCY_FAILURE).build();
-        return create(ex, problem, request);
-    }
-
     @Override
     public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
@@ -143,17 +134,6 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
                     .withTitle(status.getReasonPhrase())
                     .withStatus(status)
                     .withDetail("Unable to convert http message")
-                    .withCause(
-                        Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
-                    );
-            }
-            if (throwable instanceof DataAccessException) {
-                return Problem
-                    .builder()
-                    .withType(type)
-                    .withTitle(status.getReasonPhrase())
-                    .withStatus(status)
-                    .withDetail("Failure during data access")
                     .withCause(
                         Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
                     );
