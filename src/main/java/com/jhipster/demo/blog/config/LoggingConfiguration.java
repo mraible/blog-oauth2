@@ -15,7 +15,7 @@ import tech.jhipster.config.JHipsterProperties;
 /*
  * Configures the console and Logstash log appenders from the app properties
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class LoggingConfiguration {
 
     public LoggingConfiguration(

@@ -124,6 +124,7 @@ spring:
           oidc:
             client-id: web_app
             client-secret: web_app
+            scope: openid,profile,email
 ```
 
 ### Okta
@@ -172,7 +173,7 @@ After making these changes, you should be good to go! If you have any issues, pl
 
 ### Auth0
 
-If you'd like to use [Auth0](https://auth0.com/) instead of Keycloak, you can follow the below configuration steps:
+If you'd like to use [Auth0](https://auth0.com/) instead of Keycloak, follow the configuration steps below:
 
 - Create a free developer account at <https://auth0.com/signup>. After successful sign-up, your account will be associated with a unique domain like `dev-xxx.us.auth0.com`
 - Create a new application of type `Regular Web Applications`. Switch to the `Settings` tab, and configure your application settings like:
@@ -194,11 +195,11 @@ function (user, context, callback) {
   const rolesClaim = prepareCustomClaimKey('roles');
 
   if (context.idToken) {
-  	context.idToken[rolesClaim] = roles;
+    context.idToken[rolesClaim] = roles;
   }
 
   if (context.accessToken) {
-  	context.accessToken[rolesClaim] = roles;
+    context.accessToken[rolesClaim] = roles;
   }
 
   callback(null, user, context);
@@ -215,11 +216,13 @@ spring:
       client:
         provider:
           oidc:
+            # make sure to include the ending slash!
             issuer-uri: https://{your-auth0-domain}/
         registration:
           oidc:
             client-id: {clientId}
             client-secret: {clientSecret}
+            scope: openid,profile,email
 jhipster:
   ...
   security:
@@ -227,10 +230,6 @@ jhipster:
       audience:
         - https://{your-auth0-domain}/api/v2/
 ```
-
-- Before running Cypress tests, specify Auth0 user credentials by overriding the `E2E_USERNAME` and `E2E_PASSWORD` environment variables. See Cypress' documentation for setting OS [environment variables](https://docs.cypress.io/guides/guides/environment-variables#Setting) to learn more.
-
-**Auth0 requires a user to provide authorization consent on the first login.** Consent flow is currently not handled in the Cypress test suite. To mitigate the issue, you can use a user account that has already granted consent to authorize application access via interactive login.
 
 ## Building for production
 

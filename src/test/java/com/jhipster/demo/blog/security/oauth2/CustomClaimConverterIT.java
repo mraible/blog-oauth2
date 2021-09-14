@@ -135,14 +135,10 @@ class CustomClaimConverterIT {
         user.put("preferred_username", USERNAME);
         mockHttpGetUserInfo(user);
 
-        assertThatCode(
-                () -> {
-                    Map<String, Object> convertedClaims = customClaimConverter.convert(claims);
-                    assertThat(convertedClaims)
-                        .containsEntry("preferred_username", USERNAME)
-                        .doesNotContainKeys("given_name", "family_name");
-                }
-            )
+        assertThatCode(() -> {
+                Map<String, Object> convertedClaims = customClaimConverter.convert(claims);
+                assertThat(convertedClaims).containsEntry("preferred_username", USERNAME).doesNotContainKeys("given_name", "family_name");
+            })
             .doesNotThrowAnyException();
     }
 }

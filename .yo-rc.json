@@ -22,6 +22,8 @@
     "skipClient": false,
     "testFrameworks": ["protractor"],
     "websocket": false,
+    "enableGradleEnterprise": false,
+    "gradleEnterpriseHost": "",
     "applicationType": "monolith",
     "packageName": "com.jhipster.demo.blog",
     "packageFolder": "com/jhipster/demo/blog",
@@ -41,8 +43,8 @@
     "otherModules": [],
     "pages": [],
     "nativeLanguage": "en",
-    "creationTimestamp": 1629760624996,
+    "creationTimestamp": 1631577393553,
     "devServerPort": 4200,
-    "lastLiquibaseTimestamp": 1629760804000
+    "lastLiquibaseTimestamp": 1631577573000
   }
 }

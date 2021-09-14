@@ -122,18 +122,16 @@ public class BlogResource {
 
         Optional<Blog> result = blogRepository
             .findById(blog.getId())
-            .map(
-                existingBlog -> {
-                    if (blog.getName() != null) {
-                        existingBlog.setName(blog.getName());
-                    }
-                    if (blog.getHandle() != null) {
-                        existingBlog.setHandle(blog.getHandle());
-                    }
-
-                    return existingBlog;
+            .map(existingBlog -> {
+                if (blog.getName() != null) {
+                    existingBlog.setName(blog.getName());
                 }
-            )
+                if (blog.getHandle() != null) {
+                    existingBlog.setHandle(blog.getHandle());
+                }
+
+                return existingBlog;
+            })
             .map(blogRepository::save);
 
         return ResponseUtil.wrapOrNotFound(

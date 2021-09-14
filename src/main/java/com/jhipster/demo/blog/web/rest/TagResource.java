@@ -126,15 +126,13 @@ public class TagResource {
 
         Optional<Tag> result = tagRepository
             .findById(tag.getId())
-            .map(
-                existingTag -> {
-                    if (tag.getName() != null) {
-                        existingTag.setName(tag.getName());
-                    }
-
-                    return existingTag;
+            .map(existingTag -> {
+                if (tag.getName() != null) {
+                    existingTag.setName(tag.getName());
                 }
-            )
+
+                return existingTag;
+            })
             .map(tagRepository::save);
 
         return ResponseUtil.wrapOrNotFound(

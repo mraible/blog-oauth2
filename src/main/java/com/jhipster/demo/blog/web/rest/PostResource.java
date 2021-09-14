@@ -128,21 +128,19 @@ public class PostResource {
 
         Optional<Post> result = postRepository
             .findById(post.getId())
-            .map(
-                existingPost -> {
-                    if (post.getTitle() != null) {
-                        existingPost.setTitle(post.getTitle());
-                    }
-                    if (post.getContent() != null) {
-                        existingPost.setContent(post.getContent());
-                    }
-                    if (post.getDate() != null) {
-                        existingPost.setDate(post.getDate());
-                    }
-
-                    return existingPost;
+            .map(existingPost -> {
+                if (post.getTitle() != null) {
+                    existingPost.setTitle(post.getTitle());
                 }
-            )
+                if (post.getContent() != null) {
+                    existingPost.setContent(post.getContent());
+                }
+                if (post.getDate() != null) {
+                    existingPost.setDate(post.getDate());
+                }
+
+                return existingPost;
+            })
             .map(postRepository::save);
 
         return ResponseUtil.wrapOrNotFound(

@@ -24,14 +24,6 @@ import tech.jhipster.config.JHipsterConstants;
 @SpringBootApplication
 @NativeHint(
     options = { "--enable-url-protocols=http", "--enable-url-protocols=https" },
-    resources = {
-        @ResourceHint(patterns = "com/jhipster/demo/blog/config/WebConfigurer.class"),
-        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/User.class"),
-        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Authority.class"),
-        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Blog.class"),
-        @ResourceHint(patterns = "com/jhipster/demo/blog/domain/Post.class"),
-        @ResourceHint(patterns = "com/jhipster/demo//blog/domain/Tag.class"),
-    },
     types = @TypeHint(
         access = AccessBits.ALL,
         typeNames = {
@@ -52,7 +44,6 @@ import tech.jhipster.config.JHipsterConstants;
             "springfox.documentation.spi.service.ResponseBuilderPlugin",
             "springfox.documentation.service.PathDecorator",
             "springfox.documentation.spi.DocumentationType",
-            "com.jhipster.demo.blog.config.WebConfigurer",
         }
     )
 )

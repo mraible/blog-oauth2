@@ -14,6 +14,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -63,17 +64,18 @@ class LogoutResourceIT {
 
     @Test
     void getLogoutInformation() throws Exception {
+        final String ORIGIN_URL = "http://localhost:8080";
         String logoutUrl =
             this.registrations.findByRegistrationId("oidc")
                 .getProviderDetails()
                 .getConfigurationMetadata()
                 .get("end_session_endpoint")
                 .toString();
+        logoutUrl = logoutUrl + "?id_token_hint=" + ID_TOKEN + "&post_logout_redirect_uri=" + ORIGIN_URL;
         restLogoutMockMvc
-            .perform(post("/api/logout"))
+            .perform(post("http://localhost:8080/api/logout").header(HttpHeaders.ORIGIN, ORIGIN_URL))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.logoutUrl").value(logoutUrl))
-            .andExpect(jsonPath("$.idToken").value(ID_TOKEN));
+            .andExpect(jsonPath("$.logoutUrl").value(logoutUrl));
     }
 }
