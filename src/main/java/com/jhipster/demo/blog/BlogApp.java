@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.logging.logback.ColorConverter;
 import org.springframework.core.env.Environment;
@@ -47,7 +46,7 @@ import tech.jhipster.config.JHipsterConstants;
         }
     )
 )
-@EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
+@EnableConfigurationProperties({ ApplicationProperties.class })
 public class BlogApp {
 
     private static final Logger log = LoggerFactory.getLogger(BlogApp.class);
