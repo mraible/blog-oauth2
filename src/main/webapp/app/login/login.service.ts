@@ -16,20 +16,7 @@ export class LoginService {
 
   logout(): void {
     this.authServerProvider.logout().subscribe((logout: Logout) => {
-      let logoutUrl = logout.logoutUrl;
-      const redirectUri = `${location.origin}${this.location.prepareExternalUrl('/')}`;
-
-      // if Keycloak, uri has protocol/openid-connect/token
-      if (logoutUrl.includes('/protocol')) {
-        logoutUrl = logoutUrl + '?redirect_uri=' + redirectUri;
-      } else if (logoutUrl.includes('auth0.com')) {
-        // Auth0
-        logoutUrl = `${logoutUrl}?client_id=${logout.clientId}&returnTo=${redirectUri}`;
-      } else {
-        // Okta
-        logoutUrl = logoutUrl + '?id_token_hint=' + logout.idToken + '&post_logout_redirect_uri=' + redirectUri;
-      }
-      window.location.href = logoutUrl;
+      window.location.href = logout.logoutUrl;
     });
   }
 }

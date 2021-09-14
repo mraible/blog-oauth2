@@ -44,5 +44,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": ["blog"],
-  "changelogDate": "20210823231904"
+  "changelogDate": "20210913235833"
 }
