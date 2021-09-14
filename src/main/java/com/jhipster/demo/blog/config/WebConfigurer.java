@@ -27,7 +27,7 @@ import tech.jhipster.config.h2.H2ConfigurationHelper;
 /**
  * Configuration of web application with Servlet 3.0 APIs.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
 
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
@@ -66,8 +66,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         if (server instanceof ConfigurableServletWebServerFactory) {
             ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
             File root;
-            String prefixPath = resolvePathPrefix();
-            root = new File(prefixPath + "target/classes/static/");
+            String prefixPath = "./"; // resolvePathPrefix();
+            root = new File(prefixPath + "static/");
             if (root.exists() && root.isDirectory()) {
                 servletWebServer.setDocumentRoot(root);
             }

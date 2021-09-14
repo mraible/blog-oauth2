@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class JacksonConfiguration {
 
     /**
